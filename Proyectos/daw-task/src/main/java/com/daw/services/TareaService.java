@@ -70,5 +70,52 @@ public class TareaService {
 	
 	
 	//delete
+	public void delete(int idTarea) {
+		if(!this.tareaRepository.existsById(idTarea)) {
+			throw new TareaNotFoundException("La tarea no existe.");
+		}
+		this.tareaRepository.deleteById(idTarea);
+	}
+	
+	
+	//endpoint cambiar el estado de la tarea - en progreso
+	public Tarea marcarEnProgreso(int idTarea) {
+		Tarea tarea = this.findById(idTarea);
+		
+		if(!tarea.getEstado().equals(Estado.PENDIENTE)){
+			throw new TareaException("No se puede modificar el estado de la tarea. Su estado no es pendiente.");
+		}
+		
+		tarea.setEstado(Estado.EN_PROGRESO);
+		return this.tareaRepository.save(tarea);
+	}
+	
+	//endopoint cambiar el estado de la tarea - completada
+	public Tarea marcarCompletada(int idTarea) {
+		Tarea tarea = this.findById(idTarea);
+		
+		if(!tarea.getEstado().equals(Estado.EN_PROGRESO)){
+			throw new TareaException("No se puede modificar el estado de la tarea. Su estado no es pendiente.");
+		}
+		
+		tarea.setEstado(Estado.COMPLETADA);
+		return this.tareaRepository.save(tarea);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
