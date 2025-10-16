@@ -68,7 +68,6 @@ public class TareaService {
 	}
 	
 	
-	
 	//delete
 	public void delete(int idTarea) {
 		if(!this.tareaRepository.existsById(idTarea)) {
@@ -102,6 +101,27 @@ public class TareaService {
 		return this.tareaRepository.save(tarea);
 	}
 	
+	//Obtener tareas pendientes
+	public List<Tarea> pendientes(){
+		return this.tareaRepository.findByEstado(Estado.PENDIENTE);
+	}
+	
+	
+	//Obtener tareas en progreso
+	public List<Tarea> enProgreso(){
+		return this.tareaRepository.findByEstado(Estado.EN_PROGRESO);
+	}
+	
+	
+	//Obtener tareas completadas
+	public List<Tarea> completadas(){
+		return this.tareaRepository.findByEstado(Estado.COMPLETADA);
+	}
+	
+	//Obtener tareas vencidas
+	public List<Tarea> vencidas(){
+		
+	}
 	
 	
 	
