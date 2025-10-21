@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.daw.persistence.entities.Pokeball;
 import com.daw.persistence.entities.Pokemon;
@@ -12,6 +13,7 @@ import com.daw.persistence.repositories.PokemonRepository;
 import com.daw.services.exceptions.PokemonException;
 import com.daw.services.exceptions.PokemonNotFoundException;
 
+@Service
 public class PokemonService {
 
 	@Autowired
@@ -53,5 +55,71 @@ public class PokemonService {
 		if(pokemon.getId() != idPokemon) {
 			throw new PokemonException("El id del body no corresponde con el id del path.");
 		}
+		if(!this.pokemonrepository.existsById(idPokemon)) {
+			throw new PokemonNotFoundException("Este id de Pokemon no existe.");
+		}
+		if(pokemon.getFechaCaptura() != null) {
+			throw new PokemonException("No se puede modificar la fecha de captura.");
+		}
+		if(pokemon.getCapturado() != null) {
+			throw new PokemonException("No se puede modificar el tipo de captura.");
+		}
+		
+		Pokemon pokemonBD = this.findById(idPokemon);
+		pokemonBD.setTitulo(pokemon.getTitulo());
+		pokemonBD.setNumeroPokedex(pokemon.getNumeroPokedex());
+		return this.pokemonrepository.save(pokemonBD);
 	}
+	
+	//Borrar un pokemon
+	public void delete(int idPokemon) {
+		if(!this.pokemonrepository.existsById(idPokemon)) {
+			throw new PokemonNotFoundException("Este id de Pokemon no existe.");
+		}
+		this.pokemonrepository.deleteById(idPokemon);
+	}
+	
+	//Obtener pokemon por su numero de pokedex
+	public Pokemon findByNumPokedex(int numPokedex) {
+		if(!this.pokemonrepository.existsByNumeroPokedex(numPokedex)) {
+			throw new PokemonNotFoundException("Este número de Pokedex no está registrado.");
+		}
+		return this.pokemonrepository.findByNumeroPokedex(numPokedex);
+	}
+	
+	//Obtener pokemons entre rango de fechas
+	public List<Pokemon> findPokemonBetweenDates(LocalDate inicio, LocalDate fin){
+		if(inicio == null || fin == null) {
+			throw new PokemonException("La fecha no puede ser nula.");
+		}
+		if(inicio.isAfter(fin)) {
+			throw new PokemonException("La fecha de inicio no puede ser posterior a la de fin.");
+		}
+		return this.pokemonrepository.findByFechaCapturaBetween(inicio, fin);
+	}
+	
+	//Obtener pokemon por su tipo
+	
+	
+	//Cambiar el tipo de un pokemon
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
