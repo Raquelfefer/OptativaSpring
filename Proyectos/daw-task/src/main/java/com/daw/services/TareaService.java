@@ -118,10 +118,6 @@ public class TareaService {
 		return this.tareaRepository.findByEstado(Estado.COMPLETADA);
 	}
 	
-	//Obtener tareas vencidas
-	public List<Tarea> vencidas(){
-		
-	}
 	
 	
 	

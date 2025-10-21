@@ -1,6 +1,6 @@
 package com.daw.persistence.entities;
 
-public enum Capturado {
-
+public enum Pokeball {
+	
 	POKEBALL, SUPERBALL, ULTRABALL;
 }

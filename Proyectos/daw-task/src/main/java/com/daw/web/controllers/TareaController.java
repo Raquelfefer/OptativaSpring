@@ -102,10 +102,6 @@ public class TareaController {
 		return ResponseEntity.ok(this.tareaService.completadas());
 	}
 	
-	@GetMapping("/tareasVencidas")
-	public ResponseEntity<?> vencidas(){
-		return ResponseEntity.ok(this.tareaService.vencidas());
-	}
 	
 	
 	

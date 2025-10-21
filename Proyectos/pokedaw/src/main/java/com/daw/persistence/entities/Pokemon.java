@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table
+@Table(name = "pokemon")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -41,6 +41,7 @@ public class Pokemon {
 	private LocalDate fechaCaptura;
 	
 	@Enumerated(value = EnumType.STRING)
-	private Capturado capturado;
+	private Pokeball capturado;
+	
 	
 }
