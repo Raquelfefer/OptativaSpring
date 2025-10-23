@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daw.persistence.entities.Pokemon;
+import com.daw.persistence.entities.Tipo;
 import com.daw.services.PokemonService;
 import com.daw.services.exceptions.PokemonException;
 import com.daw.services.exceptions.PokemonNotFoundException;
@@ -97,6 +98,22 @@ public class PokemonControllers {
 		}catch(PokemonException ex) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 		}
+	}
+	
+	//Obtener pokemon por su tipo
+	@GetMapping("/tipo")
+	public ResponseEntity<?> findByTipo(@RequestParam String tipo){
+		try {
+			return ResponseEntity.ok(this.pokemonService.findByTipo(tipo));
+		}catch(PokemonException ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+		}
+	}
+	
+	//Cambiar el tipo de un pokemon
+	@PostMapping("/cambiarTipo")
+	public ResponseEntity<?> modificarTipo(@RequestBody Pokemon pokemon, @PathVariable int idPokemon, @RequestParam int posicion, @RequestParam String tipo){
+		
 	}
 	
 	

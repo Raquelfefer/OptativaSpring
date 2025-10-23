@@ -99,10 +99,37 @@ public class PokemonService {
 	}
 	
 	//Obtener pokemon por su tipo
-	
+	public List<Pokemon> findByTipo(String tipo){
+		Tipo t;
+		try {
+			t = Tipo.valueOf(tipo.toUpperCase());
+		}catch(IllegalArgumentException ex) {
+			throw new PokemonException ("Ese tipo no existe.");
+		}
+
+		return this.pokemonrepository.findByTipo(t);
+	}
 	
 	//Cambiar el tipo de un pokemon
-	
+	public Pokemon modificarTipo(Pokemon pokemon, int idPokemon, int posicion, String tipo) {
+		if(pokemon.getId() != idPokemon) {
+			throw new PokemonException ("El id del body no corresponde con el id del path.");
+		}
+		if(!this.pokemonrepository.existsById(idPokemon)) {
+			throw new PokemonNotFoundException("Ese id no existe.");
+		}
+		if(posicion == 1 || posicion == 2) {
+			throw new PokemonException("El tipo debe ser tipo1 o tipo2");
+		}
+		Tipo t;
+		try {
+			t = Tipo.valueOf(tipo.toUpperCase());
+		}catch(IllegalArgumentException ex) {
+			throw new PokemonException ("Ese tipo no existe.");
+		}
+		
+		
+	}
 	
 	
 	
