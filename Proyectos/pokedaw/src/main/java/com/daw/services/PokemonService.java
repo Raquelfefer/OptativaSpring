@@ -44,18 +44,15 @@ public class PokemonService {
 			pokemon.setCapturado(Capturado.POKEBALL);
 		}
 		
-		pokemon.setId(0);
 		pokemon.setFechaCaptura(LocalDate.now());
 		
 		return this.pokemonrepository.save(pokemon);
 	}
 	
 	//Modificar un pokemon
-	public Pokemon update(Pokemon pokemon, int idPokemon) {
-		if(pokemon.getId() != idPokemon) {
-			throw new PokemonException("El id del body no corresponde con el id del path.");
-		}
-		if(!this.pokemonrepository.existsById(idPokemon)) {
+	public Pokemon update(Pokemon pokemon) {
+		
+		if(!this.pokemonrepository.existsById(pokemon.getId())) {
 			throw new PokemonNotFoundException("Este id de Pokemon no existe.");
 		}
 		if(pokemon.getFechaCaptura() != null) {
@@ -65,7 +62,7 @@ public class PokemonService {
 			throw new PokemonException("No se puede modificar el tipo de captura.");
 		}
 		
-		Pokemon pokemonBD = this.findById(idPokemon);
+		Pokemon pokemonBD = this.findById(pokemon.getId());
 		pokemonBD.setTitulo(pokemon.getTitulo());
 		pokemonBD.setNumeroPokedex(pokemon.getNumeroPokedex());
 		return this.pokemonrepository.save(pokemonBD);
@@ -115,7 +112,7 @@ public class PokemonService {
 		if(!this.pokemonrepository.existsById(idPokemon)) {
 			throw new PokemonNotFoundException("Ese id no existe.");
 		}
-		if(posicion == 1 || posicion == 2) {
+		if(!(posicion == 1 || posicion == 2)) {
 			throw new PokemonException("El tipo debe ser tipo1 o tipo2");
 		}
 		Tipo t;

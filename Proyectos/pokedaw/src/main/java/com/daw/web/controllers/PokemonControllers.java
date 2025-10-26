@@ -56,9 +56,9 @@ public class PokemonControllers {
 	
 	//Modificar pokemon
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody Pokemon pokemon, @PathVariable int idPokemon){
+	public ResponseEntity<?> update(@RequestBody Pokemon pokemon){
 		try {
-			return ResponseEntity.ok(this.pokemonService.update(pokemon, idPokemon));
+			return ResponseEntity.ok(this.pokemonService.update(pokemon));
 		}catch(PokemonNotFoundException ex) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 		}catch(PokemonException ex) {
@@ -110,7 +110,7 @@ public class PokemonControllers {
 	}
 	
 	//Cambiar el tipo de un pokemon
-	@PostMapping("/cambiarTipo")
+	@PutMapping("/cambiarTipo/{idPokemon}")
 	public ResponseEntity<?> modificarTipo(@PathVariable int idPokemon, @RequestParam int posicion, @RequestParam String tipo){
 		try {
 			return ResponseEntity.ok(this.pokemonService.modificarTipo(idPokemon, posicion, tipo));

@@ -1,0 +1,267 @@
+{
+	"info": {
+		"_postman_id": "d047d23c-fdb8-45f7-bdd8-e5b555579953",
+		"name": "Pokemon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44654939",
+		"_collection_link": "https://raquel-5222341.postman.co/workspace/Raquel's-Workspace~e5d4e21a-ca1f-43b6-8d69-89563fa9e1e5/collection/44654939-d047d23c-fdb8-45f7-bdd8-e5b555579953?action=share&source=collection_link&creator=44654939"
+	},
+	"item": [
+		{
+			"name": "FindAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/pokedaw/pokemon",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"pokedaw",
+						"pokemon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/pokedaw/pokemon/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"pokedaw",
+						"pokemon",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroPokedex\":94,\r\n    \"titulo\":\"Gengar\",\r\n    \"tipo1\":\"FANTASMA\",\r\n    \"tipo2\":\"VENENO\",\r\n    \"capturado\":\"ULTRABALL\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/pokedaw/pokemon",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"pokedaw",
+						"pokemon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modificar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 12,\r\n    \"numeroPokedex\":90,\r\n    \"titulo\":\"Gasly\"\r\n  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/pokedaw/pokemon",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"pokedaw",
+						"pokemon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/pokedaw/pokemon/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"pokedaw",
+						"pokemon",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindByNumPokedex",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 12,\r\n    \"numeroPokedex\":90,\r\n    \"titulo\":\"Gasly\"\r\n  \r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/pokedaw/pokemon/pokedex/91",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"pokedaw",
+						"pokemon",
+						"pokedex",
+						"91"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindByFechaCapturado",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 12,\r\n    \"numeroPokedex\":90,\r\n    \"titulo\":\"Gasly\"\r\n  \r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/pokedaw/pokemon/fechaCapturados?inicio=2025-01-01&fin=2025-10-26",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"pokedaw",
+						"pokemon",
+						"fechaCapturados"
+					],
+					"query": [
+						{
+							"key": "inicio",
+							"value": "2025-01-01"
+						},
+						{
+							"key": "fin",
+							"value": "2025-10-26"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BuscarTipo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/pokedaw/pokemon/tipo?tipo=agua",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"pokedaw",
+						"pokemon",
+						"tipo"
+					],
+					"query": [
+						{
+							"key": "inicio",
+							"value": "2024-05-09",
+							"disabled": true
+						},
+						{
+							"key": "fin",
+							"value": "2024-05-12",
+							"disabled": true
+						},
+						{
+							"key": "tipo",
+							"value": "agua"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CambiarTipo",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/pokedaw/pokemon/cambiarTipo/9?posicion=4&tipo=planta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"pokedaw",
+						"pokemon",
+						"cambiarTipo",
+						"9"
+					],
+					"query": [
+						{
+							"key": "posicion",
+							"value": "4"
+						},
+						{
+							"key": "tipo",
+							"value": "planta"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
