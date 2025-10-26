@@ -14,6 +14,7 @@ public interface PokemonRepository extends ListCrudRepository<Pokemon, Integer>{
 
 	boolean existsByNumeroPokedex(int numPokedex);
 	Pokemon findByNumeroPokedex(int numPokedex);
+	
 	List<Pokemon> findByFechaCapturaBetween(LocalDate inicio,LocalDate fin);
 	
 	@Query("SELECT p FROM Pokemon p WHERE p.tipo1 = :tipo OR p.tipo2 = :tipo")

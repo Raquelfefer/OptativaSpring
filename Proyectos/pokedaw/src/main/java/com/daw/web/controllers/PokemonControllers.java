@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daw.persistence.entities.Pokemon;
-import com.daw.persistence.entities.Tipo;
 import com.daw.services.PokemonService;
 import com.daw.services.exceptions.PokemonException;
 import com.daw.services.exceptions.PokemonNotFoundException;
@@ -80,9 +79,9 @@ public class PokemonControllers {
 	
 	//Obtener pokemon por su numero de pokedex
 	@GetMapping("/pokedex/{numPokedex}")
-	public ResponseEntity<?> findByNumPokedex(@PathVariable int idPokedex){
+	public ResponseEntity<?> findByNumPokedex(@PathVariable int numPokedex){
 		try {
-			return ResponseEntity.ok(this.pokemonService.findByNumPokedex(idPokedex));
+			return ResponseEntity.ok(this.pokemonService.findByNumPokedex(numPokedex));
 		}catch(PokemonNotFoundException ex) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 		}
@@ -112,8 +111,14 @@ public class PokemonControllers {
 	
 	//Cambiar el tipo de un pokemon
 	@PostMapping("/cambiarTipo")
-	public ResponseEntity<?> modificarTipo(@RequestBody Pokemon pokemon, @PathVariable int idPokemon, @RequestParam int posicion, @RequestParam String tipo){
-		
+	public ResponseEntity<?> modificarTipo(@PathVariable int idPokemon, @RequestParam int posicion, @RequestParam String tipo){
+		try {
+			return ResponseEntity.ok(this.pokemonService.modificarTipo(idPokemon, posicion, tipo));
+		}catch(PokemonNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+		}catch(PokemonException ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+		}
 	}
 	
 	

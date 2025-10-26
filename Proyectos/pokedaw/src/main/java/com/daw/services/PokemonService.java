@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.daw.persistence.entities.Pokeball;
+import com.daw.persistence.entities.Capturado;
 import com.daw.persistence.entities.Pokemon;
 import com.daw.persistence.entities.Tipo;
 import com.daw.persistence.repositories.PokemonRepository;
@@ -41,7 +41,7 @@ public class PokemonService {
 			pokemon.setTipo2(Tipo.NINGUNO);
 		}
 		if(pokemon.getCapturado() == null) {
-			pokemon.setCapturado(Pokeball.POKEBALL);
+			pokemon.setCapturado(Capturado.POKEBALL);
 		}
 		
 		pokemon.setId(0);
@@ -111,10 +111,7 @@ public class PokemonService {
 	}
 	
 	//Cambiar el tipo de un pokemon
-	public Pokemon modificarTipo(Pokemon pokemon, int idPokemon, int posicion, String tipo) {
-		if(pokemon.getId() != idPokemon) {
-			throw new PokemonException ("El id del body no corresponde con el id del path.");
-		}
+	public Pokemon modificarTipo(int idPokemon, int posicion, String tipo) {
 		if(!this.pokemonrepository.existsById(idPokemon)) {
 			throw new PokemonNotFoundException("Ese id no existe.");
 		}
@@ -127,8 +124,16 @@ public class PokemonService {
 		}catch(IllegalArgumentException ex) {
 			throw new PokemonException ("Ese tipo no existe.");
 		}
+		Pokemon pokemonBD = this.findById(idPokemon);
+		if(posicion == 1 && pokemonBD.getTipo2() != t) {
+			pokemonBD.setTipo1(t);
+		}else if(posicion == 2 && pokemonBD.getTipo1() != t) {
+			pokemonBD.setTipo2(t);
+		}else {
+			throw new PokemonException("El tipo nuevo introducido y el otro tipo no pueden ser iguales.");
+		}
 		
-		
+		return this.pokemonrepository.save(pokemonBD);
 	}
 	
 	

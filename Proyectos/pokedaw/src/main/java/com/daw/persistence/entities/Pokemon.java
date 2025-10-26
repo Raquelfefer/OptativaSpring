@@ -41,7 +41,7 @@ public class Pokemon {
 	private LocalDate fechaCaptura;
 	
 	@Enumerated(value = EnumType.STRING)
-	private Pokeball capturado;
+	private Capturado capturado;
 	
 	
 }
