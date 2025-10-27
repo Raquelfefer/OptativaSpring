@@ -86,11 +86,11 @@ public class PokemonService {
 	
 	//Obtener pokemons entre rango de fechas
 	public List<Pokemon> findPokemonBetweenDates(LocalDate inicio, LocalDate fin){
-		if(inicio == null || fin == null) {
-			throw new PokemonException("La fecha no puede ser nula.");
-		}
-		if(inicio.isAfter(fin)) {
+		if(fin.isBefore(inicio)) {
 			throw new PokemonException("La fecha de inicio no puede ser posterior a la de fin.");
+		}
+		if(inicio.isAfter(LocalDate.now())) {
+			throw new PokemonException("La fecha de inicio no puede ser posterior a la fecha actual");
 		}
 		return this.pokemonrepository.findByFechaCapturaBetween(inicio, fin);
 	}

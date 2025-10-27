@@ -89,9 +89,7 @@ public class PokemonControllers {
 	
 	//Obtener pokemons entre rango de fechas
 	@GetMapping("/fechaCapturados")
-	public ResponseEntity<?> findPokemonBetweenDates(
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate inicio, 
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fin){
+	public ResponseEntity<?> findPokemonBetweenDates(@RequestParam LocalDate inicio, @RequestParam LocalDate fin){
 		try {
 			return ResponseEntity.ok(this.pokemonService.findPokemonBetweenDates(inicio, fin));
 		}catch(PokemonException ex) {
@@ -115,7 +113,7 @@ public class PokemonControllers {
 		try {
 			return ResponseEntity.ok(this.pokemonService.modificarTipo(idPokemon, posicion, tipo));
 		}catch(PokemonNotFoundException ex) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 		}catch(PokemonException ex) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 		}
