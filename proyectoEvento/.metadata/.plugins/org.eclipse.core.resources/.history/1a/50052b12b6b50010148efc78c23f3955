@@ -1,0 +1,5 @@
+package com.evento.services.exceptions;
+
+public class EventoException {
+
+}

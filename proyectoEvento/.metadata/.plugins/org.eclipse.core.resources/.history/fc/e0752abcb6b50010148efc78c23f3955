@@ -1,0 +1,11 @@
+package com.evento.web.controllers;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class EventoControllers {
+	
+	@Autowired
+	private EventoService eventoService;
+
+}

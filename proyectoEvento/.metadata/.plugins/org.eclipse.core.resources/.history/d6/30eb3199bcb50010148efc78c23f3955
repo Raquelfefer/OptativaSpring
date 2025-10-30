@@ -1,0 +1,48 @@
+package com.evento.services;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.evento.persistence.entities.Estado;
+import com.evento.persistence.entities.Evento;
+import com.evento.persistence.repositories.EventoRepository;
+import com.evento.services.exceptions.EventoException;
+import com.evento.services.exceptions.EventoNotFoundException;
+
+@Service
+public class EventoService {
+
+	@Autowired 
+	private EventoRepository eventoRepository;
+	
+	
+	//Obtener todos los eventos
+	public List<Evento> findAll(){
+		return this.eventoRepository.findAll();
+	}
+	
+	//Obtener un evento por ID
+	public Evento findById(int idEvento) {
+		if(!this.eventoRepository.existsById(idEvento)) {
+			throw new EventoNotFoundException("El Id de este evento no existe.");
+		}
+		return this.eventoRepository.findById(idEvento).get();
+	}
+	
+	//Crear un evento
+	public Evento create(Evento evento) {
+		if(evento.getEstado() != null) {
+			throw new EventoException("El estado es planificado.");
+		}
+		if(evento.getFecha().isBefore(LocalDate.now())) {
+			throw new EventoException("La fecha del evento no puede ser anterior a la fecha actual.");
+		}
+		
+		evento.setEstado(Estado.PLANIFICADO);
+		
+		return this.eventoRepository.save(evento);
+	}
+}

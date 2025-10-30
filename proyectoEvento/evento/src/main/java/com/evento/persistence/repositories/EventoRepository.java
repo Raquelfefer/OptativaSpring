@@ -1,0 +1,18 @@
+package com.evento.persistence.repositories;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.data.repository.ListCrudRepository;
+
+import com.evento.persistence.entities.Estado;
+import com.evento.persistence.entities.Evento;
+import com.evento.persistence.entities.Tipo;
+
+public interface EventoRepository extends ListCrudRepository<Evento, Integer> {
+
+	List<Evento> findByEstado(Estado estado);
+	List<Evento> findByTipo(Tipo tipo);
+	List<Evento> findByFechaAfter(LocalDate fecha);
+	List<Evento> findByFechaBefore(LocalDate fecha);
+}

@@ -1,0 +1,16 @@
+package com.evento.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.evento.persistence.repositories.EventoRepository;
+
+@Service
+public class EventoServices {
+
+	@Autowired 
+	private EventoRepository eventorepository;
+	
+	
+	
+}

@@ -1,0 +1,152 @@
+package com.evento.services;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.evento.persistence.entities.Estado;
+import com.evento.persistence.entities.Evento;
+import com.evento.persistence.entities.Tipo;
+import com.evento.persistence.repositories.EventoRepository;
+import com.evento.services.exceptions.EventoException;
+import com.evento.services.exceptions.EventoNotFoundException;
+
+@Service
+public class EventoService {
+
+	@Autowired 
+	private EventoRepository eventoRepository;
+	
+	
+	//Obtener todos los eventos
+	public List<Evento> findAll(){
+		return this.eventoRepository.findAll();
+	}
+	
+	//Obtener un evento por ID
+	public Evento findById(int idEvento) {
+		if(!this.eventoRepository.existsById(idEvento)) {
+			throw new EventoNotFoundException("El Id de este evento no existe.");
+		}
+		return this.eventoRepository.findById(idEvento).get();
+	}
+	
+	//Crear un evento
+	public Evento create(Evento evento) {
+		if(evento.getEstado() != null) {
+			throw new EventoException("El estado es planificado.");
+		}
+		if(evento.getFecha().isBefore(LocalDate.now())) {
+			throw new EventoException("La fecha del evento no puede ser anterior a la fecha actual.");
+		}
+		
+		evento.setEstado(Estado.PLANIFICADO);
+		
+		return this.eventoRepository.save(evento);
+	}
+	
+	//Modificar un evento(nombre,tipo,fecha)
+	public Evento update(Evento evento) {
+		if(!this.eventoRepository.existsById(evento.getId())) {
+			throw new EventoNotFoundException("Este evento no existe.");
+		}
+		if(evento.getEstado() != null) {
+			throw new EventoException("No se puede modificar el estado del evento.");
+		}
+		if(evento.getFecha().isBefore(LocalDate.now())) {
+			throw new EventoException("La fecha del evento no puede ser anterior a la fecha actual");
+		}
+		
+		Tipo t;
+		String tipo = evento.getTipo().toString();
+		try {
+			t = Tipo.valueOf(tipo.toUpperCase());
+		}catch(IllegalArgumentException ex){
+			throw new EventoException("Ese tipo de evento no existe.");
+		}
+		
+		Evento eventoBD = this.findById(evento.getId());
+		eventoBD.setNombre(evento.getNombre());
+		eventoBD.setFecha(evento.getFecha());
+		eventoBD.setTipo(t);
+		
+		return this.eventoRepository.save(eventoBD);
+	}
+	
+	//Borrar un evento
+	public void delete(int idEvento) {
+		if(!this.eventoRepository.existsById(idEvento)) {
+			throw new EventoNotFoundException("Este evento no existe.");
+		}
+		
+		this.eventoRepository.deleteById(idEvento);
+		System.out.println("El evento ha sido borrado.");
+	}
+	
+	//Cambiar el estado del evento
+	public Evento updateEstado(int idEvento, String estado) {
+		if(!this.eventoRepository.existsById(idEvento)) {
+			throw new EventoNotFoundException("Este evento no existe.");
+		}
+		Estado e;
+		try {
+			e = Estado.valueOf(estado.toUpperCase());
+		}catch(IllegalArgumentException ex) {
+			throw new EventoException("Este estado no existe.");
+		}
+		
+		
+		Evento eventoBD = this.findById(idEvento);
+		eventoBD.setEstado(e);
+		return this.eventoRepository.save(eventoBD);
+	}
+	
+	//Obtener eventos por estado
+	public List<Evento> findByEstado(String estado){
+		Estado e;
+		try {
+			e = Estado.valueOf(estado.toUpperCase());
+		}catch(IllegalArgumentException ex) {
+			throw new EventoException("Ese estado no existe.");
+		}
+		
+		return this.eventoRepository.findByEstado(e);
+	}
+	
+	//Obtener eventos por tipo
+	public List<Evento> findByTipo(String tipo){
+		Tipo t;
+		try {
+			t = Tipo.valueOf(tipo.toUpperCase());
+		}catch(IllegalArgumentException ex) {
+			throw new EventoException("Ese tipo no existe.");
+		}
+		
+		return this.eventoRepository.findByTipo(t);
+	}
+	
+	
+	//Obtener eventos cuya fecha sea anterior a hoy
+	
+	//Obtener eventos cuya fecha sea futura a hoy
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

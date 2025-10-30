@@ -1,0 +1,5 @@
+package com.evento.persistence.entities;
+
+public enum Tipo {
+
+}

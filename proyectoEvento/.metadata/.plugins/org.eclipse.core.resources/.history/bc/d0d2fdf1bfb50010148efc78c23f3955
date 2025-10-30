@@ -1,0 +1,9 @@
+package com.evento.persistence.repositories;
+
+import org.springframework.data.repository.ListCrudRepository;
+
+import com.evento.persistence.entities.Evento;
+
+public interface EventoRepository extends ListCrudRepository<Evento, Integer> {
+
+}
