@@ -1,0 +1,47 @@
+package com.tiempo.web.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.tiempo.persistence.entities.Registro;
+import com.tiempo.services.RegistroService;
+import com.tiempo.services.exceptions.RegistroNotFoundException;
+
+@RestController
+@RequestMapping("/registro")
+public class RegistroControllers {
+
+	@Autowired
+	private RegistroService registroservice;
+	
+	//Obtener todos los registros
+	@GetMapping
+	public ResponseEntity<?> findAll(){
+		return ResponseEntity.ok(this.registroservice.findAll());
+	}
+	
+	//Modificar un registro mediante su ID
+	@PutMapping("/{idRegistro}")
+	public ResponseEntity<?> update(@RequestBody Registro registro, @PathVariable int idRegistro){
+		try {
+			return ResponseEntity.ok(this.registroservice.update(registro, idRegistro));
+		}catch(RegistroNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+		}
+	}
+	
+	//
+	
+	
+	
+	
+	
+	
+}

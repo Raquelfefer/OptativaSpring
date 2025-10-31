@@ -1,0 +1,91 @@
+package com.tiempo.services;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.tiempo.persistence.entities.Registro;
+import com.tiempo.persistence.repositories.RegistroRepository;
+import com.tiempo.services.exceptions.RegistroException;
+import com.tiempo.services.exceptions.RegistroNotFoundException;
+
+@Service
+public class RegistroService {
+	
+	@Autowired
+	private RegistroRepository registrorepository;
+	
+	//Obtener todos los registros
+	public List<Registro> findAll(){
+		return this.registrorepository.findAll();
+	}
+	
+	//Obtener un registro por id
+	public Registro findById(int idRegistro) {
+		if(!this.registrorepository.existsById(idRegistro)){
+			throw new RegistroNotFoundException("El registro no existe.");
+		}
+		return this.registrorepository.findById(idRegistro).get();
+	}
+	
+	
+	//Modificar un registro mediante su ID
+	public Registro update(Registro registro, int idRegistro) {
+		if(registro.getId() != idRegistro) {
+			throw new RegistroException("El id del body y el id del path no coinciden");
+		}
+		if(!this.registrorepository.existsById(idRegistro)) {
+			throw new RegistroNotFoundException("Esta tarea no existe");
+		}
+		if(registro.getFechaLectura() != null) {
+			throw new RegistroException("No se puede modificar la fecha de lectura.");
+		}
+		if(registro.getPrecipitacion() != null) {
+			throw new RegistroException("No se puede modificar el valor de la precipitación.");
+		}
+		
+		Registro registroBD = this.findById(idRegistro);
+		registroBD.setUbicacion(registro.getUbicacion());
+		registroBD.setTemperatura(registro.getTemperatura());
+		registroBD.setUnidad(registro.getUnidad());
+		
+		return this.registrorepository.save(registroBD);
+	}
+	
+	//Modificar una precipitacion asociada
+	public Registro updatePrecipitacion(int idRegistro, double precipitacionVieja, double precipitacionNueva) {
+		if(!this.registrorepository.existsById(idRegistro)) {
+			throw new RegistroNotFoundException("El registro no existe.");
+		}
+		if(precipitacionVieja == precipitacionNueva) {
+			throw new RegistroException("Las dos precipitaciones introducidas son iguales.");
+		}
+		if(precipitacionVieja != this.findById(idRegistro).getPrecipitacion()) {
+			throw new RegistroException("La precipitación vieja no coindice con la de base de datos.");
+		}
+		
+		Registro registroBD = this.findById(idRegistro);
+		registroBD.setPrecipitacion(precipitacionNueva);
+		
+		return this.registrorepository.save(registroBD);
+	}
+	
+	//Mostrar los registros por ubicacion y rango de fechas
+	public List<Registro> findByUbicacionAndFecha(String ubicacion, LocalDate fechaInicio, LocalDate fechaFin){
+		return this.registrorepository.findByUbicacionAndFechaLecturaBetween(ubicacion, fechaInicio, fechaFin);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

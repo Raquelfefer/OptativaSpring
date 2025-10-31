@@ -1,0 +1,10 @@
+package com.tiempo.persistence.repositories;
+
+import org.springframework.data.repository.ListCrudRepository;
+
+import com.tiempo.persistence.entities.Registro;
+
+public interface RegistroRepository extends ListCrudRepository<Registro, Integer>{
+
+	
+}

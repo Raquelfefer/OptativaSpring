@@ -1,0 +1,12 @@
+package com.tiempo.services.exceptions;
+
+public class TiempoException extends RuntimeException{
+
+	 private static final long serialVersionUID = 1L;
+
+
+	    public TiempoException(String message) {
+	        super(message);
+	    }
+
+}

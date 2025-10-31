@@ -1,0 +1,11 @@
+1761911821894	Delete element
+1761911849595	Delete element
+1761912121981	Rename type 'Tiempo'
+1761912521690	Rename type 'TiempoRepository'
+1761912535016	Rename type 'TiempoException'
+1761912546548	Rename type 'TiempoNotFoundException'
+1761912565452	Rename type 'TiempoControllers'
+1761912573125	Rename type 'TiempoServices'
+1761912591168	Delete element
+1761912748357	Rename type 'RegistroServices'
+1761916667678	Rename package 'com.tiempo'

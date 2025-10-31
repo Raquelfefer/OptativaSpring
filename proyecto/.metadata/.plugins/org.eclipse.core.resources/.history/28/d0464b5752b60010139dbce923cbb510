@@ -1,0 +1,5 @@
+package com.tiempo.persistence.repositories;
+
+public class TiempoRepository {
+
+}

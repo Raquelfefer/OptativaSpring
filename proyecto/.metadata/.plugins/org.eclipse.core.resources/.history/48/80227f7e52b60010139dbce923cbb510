@@ -1,0 +1,7 @@
+package com.tiempo.persistence.repositories;
+
+import com.tiempo.persistence.entities.Registro;
+
+public class RegistroRepository extends ListCrudRepository<Registro, Integer>{
+
+}

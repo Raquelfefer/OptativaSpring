@@ -1,0 +1,7 @@
+package com.tiempo.persistence.entities;
+
+@Entity
+@Table(name="")
+public class Tiempo {
+
+}

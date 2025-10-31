@@ -1,0 +1,14 @@
+package com.tiempo.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.tiempo.persistence.repositories.RegistroRepository;
+
+@Service
+public class RegistroService {
+	
+	@Autowired
+	private RegistroRepository registrorepository;
+	
+}

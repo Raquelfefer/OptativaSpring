@@ -1,0 +1,22 @@
+package com.tiempo.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.tiempo.persistence.entities.Registro;
+import com.tiempo.persistence.repositories.RegistroRepository;
+
+@Service
+public class RegistroService {
+	
+	@Autowired
+	private RegistroRepository registrorepository;
+	
+	//Obtener todos los registros
+	public List<Registro> findAll(){
+		return this.registrorepository.findAll();
+	}
+	
+}
