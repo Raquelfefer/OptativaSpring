@@ -11,32 +11,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "pizza")
+@Table(name = "pizza_pedido")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Pizza {
+public class PizzaPedido {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(length = 30)
-	private String nombre;
+	@Column(name= "id_pedido")
+	private int idPedido;
 	
-	@Column(length= 150)
-	private String descripcion;
+	@Column(name= "id_pizza")
+	private int idPizza;
+	
+	@Column(columnDefinition = "DECIMAL(2,1)")
+	private double cantidad;
 	
 	@Column(columnDefinition = "DECIMAL(5,2)")
-	private Double precio;
-	
-	@Column(columnDefinition = "BOOLEAN")
-	private Boolean vegetariana;
-	
-	@Column(columnDefinition = "BOOLEAN")
-	private Boolean vegana;
-	
-	@Column(columnDefinition = "BOOLEAN")
-	private Boolean disponible;
+	private double precio;
 	
 }

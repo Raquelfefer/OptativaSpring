@@ -1,42 +1,41 @@
 package com.daw.persistence.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "pizza")
+@Table(name = "cliente")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Pizza {
+public class Cliente {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(length = 30)
+	@Column(length= 30)
 	private String nombre;
 	
-	@Column(length= 150)
-	private String descripcion;
+	@Column(length= 100)
+	private String direccion;
 	
-	@Column(columnDefinition = "DECIMAL(5,2)")
-	private Double precio;
+	@Column(length= 50)
+	private String email;
 	
-	@Column(columnDefinition = "BOOLEAN")
-	private Boolean vegetariana;
+	@Column(length= 20)
+	private String telefono;
 	
-	@Column(columnDefinition = "BOOLEAN")
-	private Boolean vegana;
-	
-	@Column(columnDefinition = "BOOLEAN")
-	private Boolean disponible;
-	
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos;
 }

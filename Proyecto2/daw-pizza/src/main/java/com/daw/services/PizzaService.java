@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.daw.persistence.entities.Pizza;
 import com.daw.persistence.repositories.PizzaRepository;
+import com.daw.services.exceptions.PizzaException;
 import com.daw.services.exceptions.PizzaNotFoundException;
 
 @Service
@@ -35,5 +36,21 @@ public class PizzaService {
 	}
 	
 	//Crear una pizza
+	public Pizza create(Pizza pizza) {
+		if(pizza.getDescripcion().isBlank() || pizza.getNombre().isBlank() || pizza.getPrecio() == 0) {
+			throw new PizzaException("Los campos descripción, nombre o precio no pueden estar vacíos.");
+		}
+		return this.pizzaRepository.save(pizza);
+	}
 	
+	//Modificar una pizza
+	
+	
+	//Borrar una pizza
+	public void delete(int idPizza) {
+		if(!this.pizzaRepository.existsById(idPizza)) {
+			throw new PizzaNotFoundException("Ese id de pizza no existe.");
+		}
+		this.pizzaRepository.deleteById(idPizza);
+	}
 }
