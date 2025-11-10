@@ -13,10 +13,8 @@ import com.daw.services.exceptions.PizzaNotFoundException;
 @Service
 public class PizzaService {
 
-    private final PizzaRepository pizzaRepository;
-
 	@Autowired
-	PizzaService pizzaService;
+	private PizzaRepository pizzaRepository;
 
     PizzaService(PizzaRepository pizzaRepository) {
         this.pizzaRepository = pizzaRepository;
@@ -44,7 +42,21 @@ public class PizzaService {
 	}
 	
 	//Modificar una pizza
-	
+	public Pizza update(int idPizza, Pizza pizza) {
+		if(idPizza != pizza.getId()) {
+			throw new PizzaNotFoundException("El ID del path y del body no coinciden. ");
+		}
+		
+		Pizza pizzaBD = this.findById(idPizza);
+		pizzaBD.setDescripcion(pizza.getDescripcion());
+		pizzaBD.setDisponible(pizza.getDisponible());
+		pizzaBD.setNombre(pizza.getNombre());
+		pizzaBD.setPrecio(pizza.getPrecio());
+		pizzaBD.setVegana(pizza.getVegana());
+		pizzaBD.setVegetariana(pizza.getVegetariana());
+		
+		return this.pizzaRepository.save(pizza);
+	}
 	
 	//Borrar una pizza
 	public void delete(int idPizza) {

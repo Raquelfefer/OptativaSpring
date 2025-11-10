@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,7 +22,7 @@ import com.daw.services.exceptions.PizzaNotFoundException;
 public class PizzaController {
 
 	@Autowired
-	PizzaService pizzaService;
+	private PizzaService pizzaService;
 	
 	//Obtener todas las pizzas
 	@GetMapping
@@ -51,6 +52,19 @@ public class PizzaController {
 	}
 	
 	//Modificar una pizza
+	@PutMapping("/{idPizza}")
+	public ResponseEntity<?> update(@PathVariable int idPizza, @RequestBody Pizza pizza){
+		try {
+			return ResponseEntity.ok(this.pizzaService.update(idPizza, pizza));
+		}
+		catch(PizzaNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+		catch(PizzaException ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+		}
+	}
+	
 	
 	//Borrar una pizza
 	@DeleteMapping("/{idPizza}")

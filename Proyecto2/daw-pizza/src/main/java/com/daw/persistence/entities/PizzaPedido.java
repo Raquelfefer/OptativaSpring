@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +35,11 @@ public class PizzaPedido {
 	@Column(columnDefinition = "DECIMAL(5,2)")
 	private double precio;
 	
+	@ManyToOne
+	@JoinColumn(name= "id_pedido", referencedColumnName = "id", insertable = false, updatable = false)
+	private Pedido pedido;
+	
+	@ManyToOne
+	@JoinColumn(name= "id_pizza", referencedColumnName = "id", insertable = false, updatable = false)
+	private Pizza pizza;
 }

@@ -39,4 +39,5 @@ public class Pizza {
 	@Column(columnDefinition = "BOOLEAN")
 	private Boolean disponible;
 	
+	
 }
