@@ -55,7 +55,7 @@ public class PizzaService {
 		pizzaBD.setVegana(pizza.getVegana());
 		pizzaBD.setVegetariana(pizza.getVegetariana());
 		
-		return this.pizzaRepository.save(pizza);
+		return this.pizzaRepository.save(pizzaBD);
 	}
 	
 	//Borrar una pizza

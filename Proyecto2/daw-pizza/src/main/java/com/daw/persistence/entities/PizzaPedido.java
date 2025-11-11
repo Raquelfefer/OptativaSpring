@@ -1,5 +1,7 @@
 package com.daw.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +39,7 @@ public class PizzaPedido {
 	
 	@ManyToOne
 	@JoinColumn(name= "id_pedido", referencedColumnName = "id", insertable = false, updatable = false)
+	@JsonIgnore
 	private Pedido pedido;
 	
 	@ManyToOne
