@@ -1,0 +1,9 @@
+com\daw\persistence\repositories\PokemonRepository.class
+com\daw\persistence\entities\Pokemon.class
+com\daw\persistence\entities\Tipo.class
+com\daw\services\exceptions\PokemonException.class
+com\daw\web\controllers\PokemonControllers.class
+com\daw\persistence\entities\Capturado.class
+com\daw\services\PokemonService.class
+com\daw\PokedawApplication.class
+com\daw\services\exceptions\PokemonNotFoundException.class
