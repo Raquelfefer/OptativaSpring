@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daw.persistence.entities.Cliente;
+import com.daw.persistence.repositories.ClienteRepository;
 import com.daw.services.ClienteService;
 import com.daw.services.exceptions.ClienteException;
 import com.daw.services.exceptions.ClienteNotFoundException;
@@ -20,9 +22,15 @@ import com.daw.services.exceptions.ClienteNotFoundException;
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
+
+    private final ClienteRepository clienteRepository;
 	
 	@Autowired
 	private ClienteService clienteService;
+
+    ClienteController(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
 	
 	//Obtener todos los clientes
 	@GetMapping
@@ -76,5 +84,32 @@ public class ClienteController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 		}
 	}
+	
+	//Modificar dirección de envío
+	@PutMapping("direccion")
+	public ResponseEntity<?> updateDireccion(@RequestParam int idCliente,@RequestParam String direccion){
+		try {
+			return ResponseEntity.ok(this.clienteService.updateDireccion(idCliente, direccion));
+		}catch(ClienteNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+	}
+	
+	//Buscar cliente por telefono
+	public ResponseEntity<?> findByTelefono(@RequestParam String telefono){
+		try {
+			return ResponseEntity.ok(this.clienteService.findByTelefono(telefono));
+		}catch(ClienteNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+	}
+	
+	
 
+	
+	
+	
+	
+	
+	
 }

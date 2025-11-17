@@ -65,4 +65,69 @@ public class PizzaService {
 		}
 		this.pizzaRepository.deleteById(idPizza);
 	}
+	
+	//Pizzas disponibles ordenadas por precio
+	public List<Pizza> pizzaDisponiblePrecioAsc(){
+		return this.pizzaDisponiblePrecioAsc();
+	}
+	
+	//Buscar pizzas por su nombre(solo las que estén disponibles)
+	public List<Pizza> findByNamePizza(String nombrePizza){
+		List<Pizza> pizzas = pizzaRepository.findByNombreContainingAndDisponibleTrue(nombrePizza);
+		if(pizzas.isEmpty()) {
+			throw new PizzaNotFoundException("No hay pizzas disponibles con ese nombre");
+		}
+		return pizzas;
+	}
+	
+	//Buscar pizzas que lleven un determinado ingrediente
+	public List<Pizza> findByIngrediente(String ingrediente){
+		List<Pizza> pizzas = pizzaRepository.findByDescripcionContaining(ingrediente);
+		if(pizzas.isEmpty()) {
+			throw new PizzaNotFoundException("No hay pizzas con ese ingrediente");
+		}
+		return pizzas;
+	}
+	
+	//Buscar pizzas que no lleven un determinado ingrediente
+	public List<Pizza> findByNotIngrediente(String ingrediente){
+		List<Pizza> pizzas = pizzaRepository.findByDescripcionNotContaining(ingrediente);
+		if(pizzas.isEmpty()) {
+			throw new PizzaNotFoundException("No hay pizzas sin ese ingrediente.");
+		}
+		return pizzas;
+	}
+	
+	//Actualizar precio de una pizza
+	public Pizza updatePrecio(int idPizza, double precio) {
+		if(!this.pizzaRepository.existsById(idPizza)) {
+			throw new PizzaNotFoundException("No existe una pizza con ese ID");
+		}
+		Pizza pizzaBD = this.findById(idPizza);
+		pizzaBD.setPrecio(precio);
+		return this.pizzaRepository.save(pizzaBD);
+	}
+	
+	//Marcar una pizza como disponible/no disponible
+	public Pizza updateDisponible(int idPizza) {
+		if(!this.pizzaRepository.existsById(idPizza)) {
+			throw new PizzaNotFoundException("No existe una pizza con ese ID");
+		}
+		Pizza pizzaBD = this.findById(idPizza);
+		if(pizzaBD.getDisponible()) {
+			pizzaBD.setDisponible(false);
+		}else {
+			pizzaBD.setDisponible(true);
+		}
+		return this.pizzaRepository.save(pizzaBD);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

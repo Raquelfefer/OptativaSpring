@@ -27,7 +27,7 @@ public class PedidoService {
 	//Obtener un pedido mediante su ID
 	public Pedido findById(int idPedido) {
 		if(!this.pedidoRepository.existsById(idPedido)) {
-			throw new ClienteException("Este id no existe.");
+			throw new ClienteNotFoundException("Este id no existe.");
 		}
 		return this.pedidoRepository.findById(idPedido).get();
 	}
@@ -64,4 +64,17 @@ public class PedidoService {
 		}
 		this.pedidoRepository.deleteById(idPedido);
 	}
+	
+	//Modificar notas
+	public Pedido updateNotas(int idPedido, String nota) {
+		if(!this.pedidoRepository.existsById(idPedido)) {
+			throw new ClienteNotFoundException("Este id no existe.");
+		}
+		Pedido pedidoBD = this.findById(idPedido);
+		pedidoBD.setNotas(nota);
+		return this.pedidoRepository.save(pedidoBD);
+	}
+	
+	
+	
 }

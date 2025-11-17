@@ -27,7 +27,7 @@ public class ClienteService {
 	//Obtener una cliente mediante su ID
 	public Cliente findById(int idCliente) {
 		if(!this.clienteRepository.existsById(idCliente)) {
-			throw new ClienteException("Este id no existe.");
+			throw new ClienteNotFoundException("Este id no existe.");
 		}
 		return this.clienteRepository.findById(idCliente).get();
 	}
@@ -62,4 +62,30 @@ public class ClienteService {
 		}
 		this.clienteRepository.deleteById(idCliente);
 	}
+	
+	//Modificar dirección de envío
+	public Cliente updateDireccion(int idCliente, String direccion) {
+		if(!this.clienteRepository.existsById(idCliente)) {
+			throw new ClienteNotFoundException("Este id de cliente no existe.");
+		}
+		Cliente clienteBD = this.findById(idCliente);
+		clienteBD.setDireccion(direccion);
+		return this.clienteRepository.save(clienteBD);
+	}
+	
+	//Buscar cliente por telefono
+	public Cliente findByTelefono(String telefono) {
+		Cliente cliente = this.findByTelefono(telefono);
+		if(cliente == null) {
+			throw new ClienteNotFoundException("Cliente no encontrado con ese teléfono");
+		}
+		return cliente;
+	}
+	
+	
+	
+	
+	
+	
+	
 }

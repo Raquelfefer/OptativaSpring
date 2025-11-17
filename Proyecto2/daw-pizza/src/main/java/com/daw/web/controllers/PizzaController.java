@@ -2,6 +2,7 @@ package com.daw.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.daw.persistence.entities.Pizza;
 import com.daw.services.PizzaService;
@@ -76,4 +78,66 @@ public class PizzaController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 		}
 	}
+	
+	//Pizzas disponibles ordenadas por precio
+	@GetMapping("/pizzasDisponibles")
+	public ResponseEntity<?> pizzaDisponiblePrecioAsc(){
+		return ResponseEntity.ok(this.pizzaDisponiblePrecioAsc());
+	}
+	
+	//Buscar pizzas por su nombre(solo las que estén disponibles)
+	@GetMapping("/pizzasDisponibles/buscar")
+	public ResponseEntity<?> findByNamePizza(@RequestParam String nombrePizza){
+		try {
+			return ResponseEntity.ok(this.pizzaService.findByNamePizza(nombrePizza));
+		}catch(PizzaNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+	}
+	
+	//Buscar pizzas que lleven un determinado ingrediente
+	@GetMapping("/pizzaIngrediente")
+	public ResponseEntity<?> findByIngrediente(@RequestParam String ingrediente){
+		try {
+			return ResponseEntity.ok(this.pizzaService.findByIngrediente(ingrediente));
+		}catch(PizzaNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+	}
+	
+	//Buscar pizzas que no lleven un determinado ingrediente
+	@GetMapping("/pizzaSinIngrediente")
+	public ResponseEntity<?> findByNotIngrediente(@RequestParam String ingrediente){
+		try {
+			return ResponseEntity.ok(this.pizzaService.findByNotIngrediente(ingrediente));
+		}catch(PizzaNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+	}
+	
+	//Actualizar precio de una pizza
+	@PutMapping("/cambiarPrecio")
+	public ResponseEntity<?> updatePrecio(@RequestParam int idPizza, @RequestParam double precio){
+		try {
+			return ResponseEntity.ok(this.pizzaService.updatePrecio(idPizza, precio));
+		}catch(PizzaNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+	}
+	
+	//Marcar una pizza como disponible/no disponible
+	@PutMapping("/cambiarDisponibilidad")
+	public ResponseEntity<?> updateDisponible(@RequestParam int idPizza){
+		try {
+			return ResponseEntity.ok(this.pizzaService.updateDisponible(idPizza));
+		}catch(PizzaNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+	}
+	
+	
+	
+	
+	
+	
 }

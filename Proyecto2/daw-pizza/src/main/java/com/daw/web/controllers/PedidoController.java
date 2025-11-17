@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daw.persistence.entities.Pedido;
@@ -85,4 +86,18 @@ public class PedidoController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 		}
 	}
+	
+	//Modificar notas
+	@PutMapping("notas")
+	public ResponseEntity<?> updateNotas(@RequestParam int idPedido, @RequestParam String nota){
+		try {
+			return ResponseEntity.ok(this.pedidoService.updateNotas(idPedido, nota));
+		}catch(PedidoNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+	}
+	
+	
+	
+	
 }
