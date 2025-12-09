@@ -9,9 +9,11 @@ import com.daw.persistence.entities.Cliente;
 import com.daw.persistence.entities.Metodo;
 import com.daw.persistence.entities.Pedido;
 import com.daw.persistence.repositories.PedidoRepository;
+import com.daw.services.dto.PedidoDTO;
 import com.daw.services.exceptions.ClienteException;
 import com.daw.services.exceptions.ClienteNotFoundException;
 import com.daw.services.exceptions.PedidoNotFoundException;
+import com.daw.services.mappers.PedidoMapper;
 
 @Service
 public class PedidoService {
@@ -31,14 +33,19 @@ public class PedidoService {
 		}
 		return this.pedidoRepository.findById(idPedido).get();
 	}
+	
+	public PedidoDTO findEntityById(int idPedido) {
+		if(!this.pedidoRepository.existsById(idPedido)) {
+			throw new ClienteNotFoundException("Este id no existe.");
+		}
+		return PedidoMapper.toDTO(this.pedidoRepository.findById(idPedido).get());
+	}
 		
 	//Crear un pedido
-	public Pedido create(Pedido pedido) {
-		if(pedido.getFecha() == null || pedido.getTotal() < 0 || pedido.getIdCliente() <= 0 || pedido.getNotas().isBlank() || pedido.getMetodo() == null) {
-			throw new ClienteException("Los campos fecha, total, idCliente, notas y metodo no pueden estar vacíos.");
-		}
+	public PedidoDTO create(Pedido pedido) {
+		pedido.setId(0);
 		
-		return this.pedidoRepository.save(pedido);
+		return PedidoMapper.toDTO(this.pedidoRepository.save(pedido));
 	}
 	
 	//Modificar un cliente
