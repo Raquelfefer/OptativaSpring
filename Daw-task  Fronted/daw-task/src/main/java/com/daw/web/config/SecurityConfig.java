@@ -34,7 +34,7 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/login", "/auth/register", "/auth/refresh").permitAll()
+                .requestMatchers("/login", "/register", "/refresh").permitAll()
 
                 .requestMatchers(HttpMethod.GET, "/tareas/**").hasAnyRole("USER", "ADMIN")
                 .requestMatchers(HttpMethod.POST, "/tareas").hasAnyRole("USER", "ADMIN")
@@ -59,7 +59,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        List<String> allowedOrigins = Arrays.asList("http://localhost:4200", "http://127.0.0.1:5500", "http://localhost:5500", "http://localhost:5173");
+        List<String> allowedOrigins = Arrays.asList("http://localhost:4200");
         configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));

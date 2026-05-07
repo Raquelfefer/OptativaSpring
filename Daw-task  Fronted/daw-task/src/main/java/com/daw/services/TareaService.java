@@ -111,12 +111,12 @@ public class TareaService {
         tarea.setEstado(Estado.EN_PROGRESO);
         return this.tareaRepository.save(tarea);
     }
-	
+
 	public Tarea marcarCompletada(int idTarea) {
         Tarea tarea = this.findByIdAndUser(idTarea);
 
-        if (tarea.getEstado().equals(Estado.COMPLETADA)) {
-            throw new TareaException("La tarea ya se encuentra completada.");
+        if (!tarea.getEstado().equals(Estado.EN_PROGRESO)) {
+            throw new TareaException("La tarea no está en progreso.");
         }
 
         tarea.setEstado(Estado.COMPLETADA);

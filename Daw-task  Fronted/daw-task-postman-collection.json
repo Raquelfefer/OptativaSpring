@@ -1,0 +1,176 @@
+{
+    "info": {
+        "name": "Daw Task API - Testing & Security",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "1. Login Admin",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.environment.set(\"admin_token\", jsonData.access);"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"admin01\",\n    \"password\": \"1234\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8081/login",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8081",
+                            "path": [
+                                "login"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "2. Login User (Juan)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.environment.set(\"user_token\", jsonData.access);"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"juan85\",\n    \"password\": \"1234\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8081/login",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8081",
+                            "path": [
+                                "login"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Tareas",
+            "item": [
+                {
+                    "name": "3. Listar Tareas (Admin)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{admin_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "http://localhost:8081/tareas",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8081",
+                            "path": [
+                                "tareas"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "4. Crear Tarea (User)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{user_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"titulo\": \"Probar restricciones\",\n    \"descripcion\": \"Probando que el backend asigne el estado y usuario\",\n    \"fechaVencimiento\": \"2024-12-31\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8081/tareas",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8081",
+                            "path": [
+                                "tareas"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "5. FORZAR ERROR SEGURIDAD: Iniciar tarea ajena",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{user_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "http://localhost:8081/tareas/1/iniciar",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8081",
+                            "path": [
+                                "tareas",
+                                "1",
+                                "iniciar"
+                            ]
+                        },
+                        "description": "El usuario Juan (USER) intenta iniciar la tarea con ID 1, la cual pertenece al Admin. Esto lanzará un TareaSecurityException resultando en un 403 Forbidden o 400 Bad Request por la lógica interna que has creado, demostrando que no tiene permiso."
+                    }
+                }
+            ]
+        }
+    ]
+}

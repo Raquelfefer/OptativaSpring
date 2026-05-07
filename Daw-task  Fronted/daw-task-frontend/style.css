@@ -1,0 +1,227 @@
+:root {
+    --primary-color: #4F46E5;
+    --primary-hover: #4338CA;
+    --bg-color: #0F172A;
+    --card-bg: #1E293B;
+    --text-color: #F8FAFC;
+    --text-muted: #94A3B8;
+    --border-color: #334155;
+    
+    --pending-color: #EAB308;
+    --progress-color: #3B82F6;
+    --completed-color: #22C55E;
+    --danger-color: #EF4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Utils */
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+.btn-secondary {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-secondary:hover { background: var(--border-color); }
+
+.w-full { width: 100%; }
+.error-message { color: var(--danger-color); font-size: 0.875rem; margin-bottom: 1rem; min-height: 20px;}
+
+/* Screens */
+.screen { display: none; }
+.screen.active { display: block; animation: fadeIn 0.5s ease; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Login Screen */
+#login-screen {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%);
+}
+#login-screen.active { display: flex; }
+
+.login-card {
+    background: var(--card-bg);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+.login-card h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+.login-card h1 span { color: var(--primary-color); }
+.login-card p { color: var(--text-muted); margin-bottom: 2rem; }
+
+.input-group {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+.input-group input, .input-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+.input-group input:focus, .input-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Dashboard */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+.navbar .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-color); }
+.user-info { display: flex; align-items: center; gap: 1rem; }
+.badge { background: var(--primary-color); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+
+.dashboard-content { padding: 2rem; max-width: 1400px; margin: 0 auto; }
+.dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+
+/* Kanban Board */
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+}
+.kanban-column {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+.kanban-column h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.125rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+#col-pendiente h3::before { content: ''; display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--pending-color); }
+#col-en-progreso h3::before { content: ''; display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--progress-color); }
+#col-completada h3::before { content: ''; display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--completed-color); }
+
+.kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 100px;
+}
+
+/* Task Card */
+.task-card {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+.task-title { font-weight: 600; margin-bottom: 0.5rem; font-size: 1.05rem; }
+.task-desc { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem; }
+.task-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem; }
+.task-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+.btn-action {
+    flex: 1;
+    background: var(--border-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-action:hover { background: var(--primary-hover); }
+.btn-danger { background: rgba(239, 68, 68, 0.1); color: var(--danger-color); }
+.btn-danger:hover { background: var(--danger-color); color: white; }
+.btn-edit { background: rgba(234, 179, 8, 0.1); color: var(--pending-color); }
+.btn-edit:hover { background: var(--pending-color); color: #000; }
+
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+}
+.modal.active { display: flex; animation: fadeIn 0.3s; }
+.modal-content {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 16px;
+    width: 100%; max-width: 500px;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+.close-btn {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-size: 1.5rem; color: var(--text-muted);
+    cursor: pointer;
+}
+.close-btn:hover { color: white; }
+.modal h2 { margin-bottom: 1.5rem; }
