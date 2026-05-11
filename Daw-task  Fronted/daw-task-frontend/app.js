@@ -163,12 +163,14 @@ function renderTasks(tasks) {
             `;
         }
 
+        const authorInfo = isAdmin ? `<span>Autor: ${task.usuario?.username || 'Desconocido'}</span>` : '';
+
         card.innerHTML = `
             <div class="task-title">${task.titulo}</div>
             <div class="task-desc">${task.descripcion}</div>
             <div class="task-meta">
                 <span>Vence: ${task.fechaVencimiento}</span>
-                <span>Autor: ${task.usuario?.username || 'Desconocido'}</span>
+                ${authorInfo}
             </div>
             <div class="task-actions">${buttons}</div>
         `;

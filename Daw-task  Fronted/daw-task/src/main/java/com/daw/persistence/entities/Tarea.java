@@ -46,7 +46,6 @@ public class Tarea {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_usuario", referencedColumnName = "id", insertable = false, updatable = false)
-	@JsonIgnore
 	private Usuario usuario;
 	
 }
